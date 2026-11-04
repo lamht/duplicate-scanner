@@ -14,4 +14,4 @@ COPY scan.sh /app/scan.sh
 
 RUN chmod +x /app/scan.sh
 
-ENTRYPOINT ["/app/scan.sh"]
+ENTRYPOINT ["/bin/bash", "/app/scan.sh"]
