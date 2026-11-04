@@ -41,6 +41,9 @@ find /media -type f \
   -o -iname '*.mpeg' \) \
   -print0 |
 while IFS= read -r -d '' file; do
+    processed=$((processed + 1))
+    log "[$processed] Hashing file: $file"
+
     if ! hash=$(sha256sum -- "$file" | cut -d ' ' -f 1); then
         log "ERROR: Failed to calculate SHA256: $file"
         continue
@@ -51,11 +54,11 @@ while IFS= read -r -d '' file; do
         continue
     fi
 
-    processed=$((processed + 1))
     if (( processed == 1 || processed % 100 == 0 )); then
         log "Hashed $processed video file(s)..."
     fi
 
+    log "[$processed] SHA256: $hash; size: $size bytes"
     printf '%s,%s,%s\n' "$hash" "$size" "$file"
 done > "$TMP"
 
