@@ -1,0 +1,19 @@
+
+name: duplicate-scanner
+services:
+  duplicate-scanner:
+    image: ghcr.io/lamht/duplicate-scanner:latest
+
+    container_name: duplicate-scanner
+
+    volumes:
+      # Thư viện phim, chỉ đọc
+      - /mnt/media:/media:ro
+
+      # Báo cáo
+      - ./reports:/reports
+
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+
+    restart: "no"
